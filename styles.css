@@ -1,0 +1,89 @@
+:root {
+  --fondo: #f4f6f8;
+  --tarjeta: #ffffff;
+  --texto: #1f2933;
+  --texto-suave: #616e7c;
+  --borde: #cbd2d9;
+  --primario: #1d4ed8;
+  --primario-hover: #1e40af;
+  --exito: #15803d;
+  --error: #b91c1c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+.contenedor {
+  max-width: 640px;
+  margin: 32px auto;
+  padding: 32px;
+  background: var(--tarjeta);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+h1 { margin: 0 0 8px; font-size: 1.6rem; }
+.subtitulo { margin: 0 0 24px; color: var(--texto-suave); }
+
+.campo { margin-bottom: 20px; }
+
+label { display: block; font-weight: 600; margin-bottom: 6px; }
+.obligatorio { color: var(--error); }
+.opcional { font-weight: 400; color: var(--texto-suave); }
+.ayuda { margin: -2px 0 6px; font-size: 0.9rem; color: var(--texto-suave); }
+
+input, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+input:focus, textarea:focus {
+  outline: 2px solid var(--primario);
+  outline-offset: 1px;
+  border-color: var(--primario);
+}
+
+/* Solo marca en rojo los campos inválidos después de intentar enviar */
+form.intentado :invalid { border-color: var(--error); }
+
+button {
+  width: 100%;
+  padding: 12px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primario);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover { background: var(--primario-hover); }
+button:disabled { opacity: 0.6; cursor: wait; }
+
+.mensaje { margin: 16px 0 0; font-weight: 600; text-align: center; }
+.mensaje.exito { color: var(--exito); }
+.mensaje.error { color: var(--error); }
+
+/* Oculta el campo trampa sin usar display:none (algunos bots lo detectan) */
+.trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .contenedor { margin: 0; padding: 20px 16px; border-radius: 0; box-shadow: none; }
+}

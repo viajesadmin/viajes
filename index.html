@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación de visita a agencia</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="contenedor">
+    <header>
+      <h1>Evaluación de visita a agencia</h1>
+      <p class="subtitulo">Tu respuesta nos ayuda a saber si las visitas cumplen su propósito. Toma menos de 2 minutos.</p>
+    </header>
+
+    <form id="formulario" novalidate>
+      <div class="campo">
+        <label for="nombre">Nombre de la persona que visita <span class="obligatorio">*</span></label>
+        <input type="text" id="nombre" name="nombre" maxlength="150" required autocomplete="name">
+      </div>
+
+      <div class="campo">
+        <label for="objetivo">¿Cuál fue el objetivo principal de la visita? <span class="obligatorio">*</span></label>
+        <textarea id="objetivo" name="objetivo" rows="3" maxlength="2000" required></textarea>
+      </div>
+
+      <div class="campo">
+        <label for="cumplido">¿Se cumplió el objetivo de la visita? <span class="obligatorio">*</span></label>
+        <textarea id="cumplido" name="cumplido" rows="2" maxlength="2000" required></textarea>
+      </div>
+
+      <div class="campo">
+        <label for="justificacion">Si no se cumplió, justifica el porqué</label>
+        <p class="ayuda">Si el objetivo sí se cumplió, deja este campo vacío.</p>
+        <textarea id="justificacion" name="justificacion" rows="3" maxlength="2000"></textarea>
+      </div>
+
+      <div class="campo">
+        <label for="calificacion">¿Cómo calificas la atención y disposición recibida? <span class="obligatorio">*</span></label>
+        <textarea id="calificacion" name="calificacion" rows="3" maxlength="2000" required></textarea>
+      </div>
+
+      <div class="campo">
+        <label for="observaciones">Observaciones o sugerencias <span class="opcional">(opcional)</span></label>
+        <textarea id="observaciones" name="observaciones" rows="3" maxlength="2000"></textarea>
+      </div>
+
+      <!-- Campo trampa (honeypot): invisible para personas, los bots suelen llenarlo -->
+      <div class="trampa" aria-hidden="true">
+        <label for="website">No llenar este campo</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button type="submit" id="boton-enviar">Enviar evaluación</button>
+      <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
