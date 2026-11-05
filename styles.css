@@ -84,6 +84,51 @@ button:disabled { opacity: 0.6; cursor: wait; }
   overflow: hidden;
 }
 
+/* ---------- Modal ---------- */
+.modal {
+  width: min(90vw, 360px);
+  padding: 32px 24px;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+/* ::backdrop es el fondo oscuro que el navegador pone detrás de showModal() */
+.modal::backdrop { background: rgba(15, 23, 42, 0.55); }
+
+.modal-titulo { margin: 16px 0 4px; font-size: 1.2rem; font-weight: 700; }
+.modal-texto { margin: 0 0 4px; color: var(--texto-suave); }
+.modal button { margin-top: 20px; }
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto;
+  border: 4px solid var(--borde);
+  border-top-color: var(--primario);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+.icono-exito {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--exito);
+  border-radius: 50%;
+}
+
+/* Respeta a quien desactivó animaciones en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 2s; }
+}
+
 @media (max-width: 600px) {
   .contenedor { margin: 0; padding: 20px 16px; border-radius: 0; box-shadow: none; }
 }

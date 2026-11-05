@@ -10,7 +10,7 @@
   <main class="contenedor">
     <header>
       <h1>Evaluación de visita a agencia</h1>
-      <p class="subtitulo">Tu respuesta nos ayuda a saber si las visitas cumplen su propósito. Toma menos de 2 minutos.</p>
+      <p class="subtitulo">Tu respuesta nos ayuda a recopilar información para mejorar cada día, estar pendientes de todas las agencias y trabajar en equipo. Toma menos de 2 minutos.</p>
     </header>
 
     <form id="formulario" novalidate>
@@ -41,6 +41,12 @@
       </div>
 
       <div class="campo">
+        <label for="temas_proxima">¿Qué otros temas se podrían tratar o solucionar en una próxima visita? <span class="opcional">(opcional)</span></label>
+        <p class="ayuda">Nos ayuda a planear y agendar la siguiente visita.</p>
+        <textarea id="temas_proxima" name="temas_proxima" rows="3" maxlength="2000"></textarea>
+      </div>
+
+      <div class="campo">
         <label for="observaciones">Observaciones o sugerencias <span class="opcional">(opcional)</span></label>
         <textarea id="observaciones" name="observaciones" rows="3" maxlength="2000"></textarea>
       </div>
@@ -55,6 +61,22 @@
       <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
     </form>
   </main>
+
+  <!-- Modal con dos estados: "procesando" y "guardado" -->
+  <dialog id="modal" class="modal" aria-labelledby="modal-titulo">
+    <div id="modal-procesando" class="modal-estado">
+      <div class="spinner" aria-hidden="true"></div>
+      <p id="modal-titulo" class="modal-titulo">Procesando respuesta...</p>
+      <p class="modal-texto">Por favor espere</p>
+    </div>
+
+    <div id="modal-exito" class="modal-estado" hidden>
+      <div class="icono-exito" aria-hidden="true">✓</div>
+      <p class="modal-titulo">Respuesta guardada</p>
+      <p class="modal-texto">Muchas gracias</p>
+      <button type="button" id="modal-cerrar">Cerrar</button>
+    </div>
+  </dialog>
 
   <script src="app.js"></script>
 </body>
