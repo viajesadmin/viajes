@@ -1,15 +1,17 @@
-/* Estilo basado en la imagen de referencia: degradado naranja-rojo,
-   esferas decorativas y tarjeta de vidrio esmerilado. Los colores están todos aquí. */
+/* Estilo basado en la imagen de referencia: degradado morado-azul,
+   círculos planos cian y morados, rayas blancas y campos tipo "píldora".
+   Todos los colores están aquí: para cambiar el estilo basta con editar estas variables. */
 :root {
-  --naranja-claro: #f29a3a;
-  --naranja: #e8642f;
-  --rojo: #d13a2e;
-  --vino: #8f2418;            /* tono oscuro para texto sobre blanco (botón) */
+  --morado: #9b3fb5;
+  --azul: #5f86e0;
+  --cian: #22dfe0;
+  --cian-boton: #13b4cb;      /* cian más oscuro: el texto blanco del botón se lee mejor */
+  --cian-boton-2: #0b97b3;
+  --morado-oscuro: #7b2d8e;
   --texto: #ffffff;
   --texto-suave: rgba(255, 255, 255, 0.85);
-  --texto-campo: #2b1a14;
-  --acento: #ffe08a;          /* amarillo pálido: asteriscos y avisos (el rojo no se ve sobre naranja) */
-  --exito: #2f8f5b;
+  --texto-campo: #2d2a3e;
+  --exito: #2f9e6b;
 }
 
 * { box-sizing: border-box; }
@@ -17,154 +19,155 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
   color: var(--texto);
   line-height: 1.5;
   overflow-x: hidden;
-  background: var(--rojo); /* color de respaldo */
+  background: var(--morado); /* color de respaldo */
 }
 
-/* El degradado va en una capa fija que cubre siempre la pantalla.
-   Es más confiable que "background-attachment: fixed", que en iPhone falla
-   y en páginas largas puede dejar una franja blanca al hacer scroll. */
+/* El degradado va en una capa fija que siempre cubre la pantalla.
+   Es más confiable que "background-attachment: fixed" (que falla en iPhone). */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  /* Dos degradados mezclados: uno radial (zona clara arriba a la derecha) sobre uno lineal */
-  background:
-    radial-gradient(circle at 85% 10%, rgba(242, 154, 58, 0.9), transparent 55%),
-    linear-gradient(135deg, var(--naranja) 0%, var(--rojo) 55%, #e2512c 100%);
+  background: linear-gradient(160deg, var(--morado) 0%, #7e63cc 50%, var(--azul) 100%);
 }
 
-/* ---------- Esferas decorativas ---------- */
-/* position: fixed => se quedan quietas al hacer scroll, como un fondo.
-   z-index: 0 y la tarjeta en 1 => siempre quedan DETRÁS del formulario. */
-.esferas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+/* ---------- Figuras decorativas ---------- */
+/* position: fixed => quietas al hacer scroll. z-index 0 y la tarjeta en 1 => siempre detrás. */
+.decoracion { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
 
-.esfera {
+.circulo { position: absolute; border-radius: 50%; }
+.cian   { background: var(--cian); }
+.morado { background: var(--morado-oscuro); opacity: 0.75; }
+
+.c1 { width: 200px; height: 200px; top: -90px; left: -60px; }
+.c2 { width: 110px; height: 110px; top: 14%;  left: 2%; }
+.c3 { width: 26px;  height: 26px;  top: 32%;  left: 10%; }
+.c4 { width: 34px;  height: 34px;  top: 62%;  right: 12%; }
+.c5 { width: 130px; height: 130px; top: 64%;  right: -45px; }
+.c6 { width: 260px; height: 260px; bottom: -120px; right: 4%; }
+.c7 { width: 22px;  height: 22px;  bottom: 9%; right: 28%; }
+
+/* Rayas: barras blancas redondeadas y giradas 35° */
+.raya {
   position: absolute;
-  border-radius: 50%;
-  /* El degradado de claro (arriba-izq) a oscuro (abajo-der) es lo que da efecto 3D */
-  background: linear-gradient(135deg, #f7b23b 0%, #e8742c 45%, #9e2a17 100%);
-  box-shadow: 8px 12px 30px rgba(110, 25, 10, 0.3);
+  width: 240px;
+  height: 14px;
+  border-radius: 14px;
+  background: #fff;
+  transform: rotate(35deg);
 }
-.e1 { width: 110px; height: 110px; top: 4%;  left: 6%; }
-.e2 { width: 170px; height: 170px; top: -40px; right: 4%; }
-.e3 { width: 130px; height: 130px; top: 42%; left: -30px; }
-.e4 { width: 46px;  height: 46px;  top: 46%; right: 12%; }
-.e5 { width: 34px;  height: 34px;  bottom: 8%; left: 12%; }
-.e6 { width: 76px;  height: 76px;  bottom: 6%; right: 8%; }
+.r1 { top: 30px;  right: -40px; }
+.r2 { top: 70px;  right: -70px; }
+.r3 { bottom: 120px; left: -60px; }
+.r4 { bottom: 75px;  left: -90px; }
+/* Estas dos cruzan el círculo cian grande de abajo a la derecha, como en la referencia */
+.r5 { bottom: 70px;  right: -10px; width: 260px; }
+.r6 { bottom: 25px;  right: -40px; width: 260px; }
 
-/* ---------- Tarjeta de vidrio ---------- */
+/* ---------- Tarjeta ---------- */
 .contenedor {
   position: relative;
   z-index: 1;
   max-width: 600px;
   margin: 48px auto;
-  padding: 44px 40px 36px;
-  /* Un poco de rojo oscuro en el vidrio: sube el contraste del texto blanco */
-  background: rgba(150, 40, 15, 0.18);
-  -webkit-backdrop-filter: blur(18px);  /* Safari / iPhone */
-  backdrop-filter: blur(18px);
-  border: 2px solid rgba(255, 240, 225, 0.75);
-  border-radius: 28px;
-  box-shadow: 0 20px 50px rgba(110, 25, 10, 0.25);
+  padding: 44px 44px 40px;
+  /* Blanco translúcido + blur: deja ver el degradado y las figuras pero suavizados */
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(10px);  /* Safari / iPhone */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(60, 20, 90, 0.25);
 }
 
-/* Los dos destellos de luz sobre los bordes (izquierdo arriba, derecho abajo) */
-.contenedor::before,
-.contenedor::after {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 90px;
-  border-radius: 4px;
-  background: linear-gradient(transparent, #fff3c4, transparent);
-  box-shadow: 0 0 14px 4px rgba(255, 210, 120, 0.7);
-}
-.contenedor::before { left: -3px; top: 60px; }
-.contenedor::after  { right: -3px; bottom: 120px; }
-
-/* Sin soporte de blur: vidrio más opaco para que el texto se siga leyendo */
+/* Sin soporte de blur: tarjeta más opaca para que el texto siga legible */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .contenedor { background: rgba(160, 45, 20, 0.75); }
+  .contenedor { background: rgba(110, 60, 170, 0.85); }
 }
+
+header { text-align: center; }
 
 h1 {
-  margin: 0 0 10px;
-  font-size: 2rem;
+  margin: 0 0 12px;
+  font-size: 1.75rem;
   font-weight: 700;
-  line-height: 1.2;
-  text-shadow: 0 2px 8px rgba(110, 25, 10, 0.25);
+  line-height: 1.25;
+  text-transform: uppercase;   /* mayúsculas desde CSS: el HTML conserva el texto normal */
+  letter-spacing: 0.5px;
 }
-.subtitulo { margin: 0 0 32px; color: var(--texto-suave); font-weight: 500; }
+.subtitulo { margin: 0 0 34px; color: var(--texto-suave); }
 
 .campo { margin-bottom: 22px; }
 
 label {
   display: block;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 8px;
-  /* Sombra muy leve: asegura que el texto blanco se lea sobre las zonas claras */
-  text-shadow: 0 1px 3px rgba(110, 25, 10, 0.35);
+  padding-left: 6px;
 }
-.obligatorio { color: var(--acento); }
+.obligatorio { color: var(--cian); }
 .opcional { font-weight: 400; color: var(--texto-suave); }
-.ayuda { margin: -4px 0 8px; font-size: 0.88rem; color: var(--texto-suave); }
+.ayuda { margin: -4px 0 8px; padding-left: 6px; font-size: 0.88rem; color: var(--texto-suave); }
 
-/* Campos blancos sólidos, como en la referencia: es donde se escribe, deben verse claros */
+/* Campos blancos tipo píldora con una sombra suave debajo, como en la referencia */
 input, textarea {
   width: 100%;
-  padding: 12px 14px;
+  padding: 12px 20px;
   font: inherit;
   color: var(--texto-campo);
   background: #fff;
   border: 2px solid transparent;
-  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(60, 20, 90, 0.15);
   resize: vertical;
-  transition: box-shadow 0.15s, border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
+input    { border-radius: 999px; }   /* 999px = extremos totalmente redondos */
+textarea { border-radius: 22px; }    /* el textarea es alto: con 999px se vería como un óvalo */
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: var(--naranja-claro);
-  box-shadow: 0 0 0 4px rgba(255, 224, 138, 0.55);
+  border-color: var(--cian);
+  box-shadow: 0 0 0 4px rgba(34, 223, 224, 0.35);
 }
 
 /* Solo marca los campos inválidos después de intentar enviar */
-form.intentado :invalid { border-color: var(--acento); box-shadow: 0 0 0 3px rgba(255, 224, 138, 0.6); }
+form.intentado :invalid { border-color: var(--cian); box-shadow: 0 0 0 4px rgba(34, 223, 224, 0.45); }
 
-/* Botón blanco con texto oscuro, centrado, como en la referencia */
+/* Botón cian tipo píldora con brillo, centrado y en mayúsculas */
 button {
   display: block;
-  width: min(100%, 280px);
-  margin: 32px auto 0;
-  padding: 13px 20px;
+  width: min(100%, 300px);
+  margin: 34px auto 0;
+  padding: 14px 24px;
   font: inherit;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--vino);
-  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(180deg, var(--cian-boton), var(--cian-boton-2));
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(110, 25, 10, 0.25);
+  box-shadow: 0 8px 20px rgba(19, 180, 203, 0.45);
   transition: transform 0.15s, box-shadow 0.15s;
 }
-button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(110, 25, 10, 0.3); }
-button:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
+button:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(19, 180, 203, 0.55); }
+button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 button:disabled { opacity: 0.7; cursor: wait; transform: none; }
 
-/* Mensaje de error bajo el botón: con fondo propio para que se lea sobre el naranja */
-.mensaje { margin: 18px 0 0; font-weight: 600; text-align: center; }
+/* Mensaje de error bajo el botón: con fondo propio para que se lea sobre el morado */
+.mensaje { margin: 18px 0 0; font-weight: 500; text-align: center; }
 .mensaje:empty { display: none; }
 .mensaje.error,
 .mensaje.exito {
-  padding: 10px 14px;
-  border-radius: 8px;
-  background: rgba(110, 25, 10, 0.35);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(60, 20, 90, 0.45);
   color: #fff;
 }
 
@@ -178,7 +181,7 @@ button:disabled { opacity: 0.7; cursor: wait; transform: none; }
 }
 
 /* ---------- Modal ---------- */
-/* El modal es blanco, así que se le devuelven colores oscuros al texto */
+/* El modal es blanco, así que el texto vuelve a ser oscuro */
 .modal {
   width: min(90vw, 360px);
   padding: 34px 24px;
@@ -187,30 +190,24 @@ button:disabled { opacity: 0.7; cursor: wait; transform: none; }
   text-align: center;
   font-family: inherit;
   color: var(--texto-campo);
-  box-shadow: 0 20px 50px rgba(110, 25, 10, 0.35);
+  box-shadow: 0 20px 50px rgba(60, 20, 90, 0.35);
 }
 .modal::backdrop {
-  background: rgba(90, 20, 8, 0.45);
+  background: rgba(70, 30, 110, 0.45);
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
 }
 
 .modal-titulo { margin: 16px 0 4px; font-size: 1.2rem; font-weight: 700; }
-.modal-texto { margin: 0; color: #6b5048; }
-
-/* Dentro del modal (fondo blanco) el botón va en naranja, si no sería blanco sobre blanco */
-.modal button {
-  margin-top: 22px;
-  color: #fff;
-  background: linear-gradient(135deg, var(--naranja), var(--rojo));
-}
+.modal-texto { margin: 0; color: #6a6580; }
+.modal button { margin-top: 22px; }
 
 .spinner {
   width: 48px;
   height: 48px;
   margin: 0 auto;
-  border: 4px solid #f6d9c8;
-  border-top-color: var(--naranja);
+  border: 4px solid #e6def0;
+  border-top-color: var(--morado);
   border-radius: 50%;
   animation: girar 0.8s linear infinite;
 }
@@ -236,13 +233,13 @@ button:disabled { opacity: 0.7; cursor: wait; transform: none; }
 
 /* ---------- Celular ---------- */
 @media (max-width: 600px) {
-  .contenedor { margin: 24px 16px; padding: 32px 20px 28px; border-radius: 22px; }
-  h1 { font-size: 1.6rem; }
-  /* Esferas más pequeñas para que no tapen el formulario */
-  .e1 { width: 70px; height: 70px; }
-  .e2 { width: 110px; height: 110px; }
-  .e3 { width: 80px; height: 80px; }
-  .e4, .e5 { display: none; }
-  .e6 { width: 50px; height: 50px; }
+  .contenedor { margin: 24px 16px; padding: 32px 20px 28px; }
+  h1 { font-size: 1.4rem; }
+  /* Figuras más pequeñas y menos, para que no tapen el formulario */
+  .c1 { width: 120px; height: 120px; top: -60px; left: -40px; }
+  .c2, .c3, .c4, .c7 { display: none; }
+  .c5 { width: 80px; height: 80px; }
+  .c6 { width: 160px; height: 160px; bottom: -80px; }
+  .raya { width: 150px; height: 10px; }
   button { width: 100%; }
 }
