@@ -57,8 +57,17 @@
       </div>
 
       <div class="campo">
-        <label for="calificacion">¿Cómo calificas la atención y disposición recibida? <span class="obligatorio">*</span></label>
-        <textarea id="calificacion" name="calificacion" rows="3" maxlength="2000" required></textarea>
+        <label for="calificacion">¿Cómo calificas la visita? <span class="obligatorio">*</span></label>
+        <!-- La primera opción tiene value="" y es solo una indicación: con "required",
+             el navegador no deja enviar el formulario hasta que se elija una opción real.
+             Si cambias estas opciones, cámbialas también en OPCIONES_CALIFICACION (Codigo.gs). -->
+        <select id="calificacion" name="calificacion" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="Excelente">Excelente</option>
+          <option value="Buena">Buena</option>
+          <option value="Regular">Regular</option>
+          <option value="Mala">Mala</option>
+        </select>
       </div>
 
       <div class="campo">
@@ -99,6 +108,7 @@
     </div>
   </dialog>
 
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

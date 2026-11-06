@@ -128,7 +128,31 @@ input, textarea {
 input    { border-radius: 999px; }   /* 999px = extremos totalmente redondos */
 textarea { border-radius: 22px; }    /* el textarea es alto: con 999px se vería como un óvalo */
 
-input:focus, textarea:focus {
+/* Lista desplegable con el mismo estilo píldora que los demás campos.
+   appearance: none quita la flecha nativa (cada navegador la dibuja distinta)
+   y se reemplaza por una flecha propia en SVG, igual en todos lados. */
+select {
+  width: 100%;
+  padding: 12px 48px 12px 20px;   /* espacio a la derecha para la flecha */
+  font: inherit;
+  color: var(--texto-campo);
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%239b3fb5' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(60, 20, 90, 0.15);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+/* Mientras siga en "Selecciona una opción" (valor vacío = inválido), el texto va en gris */
+select:invalid { color: #8a8599; }
+select option { color: var(--texto-campo); }
+
+input:focus, textarea:focus, select:focus {
   outline: none;
   border-color: var(--cian);
   box-shadow: 0 0 0 4px rgba(34, 223, 224, 0.35);

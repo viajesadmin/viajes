@@ -1,5 +1,4 @@
-// URL de la aplicación web de Google Apps Script (paso 3 del README).
-const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbxlpfqXwb9L6Wxi_b0gz7C78rdhYTO3ovEUFins-sy2eu3TUYxXkTf7tv3Edj0EisSp/exec';
+// URL_APPS_SCRIPT viene de config.js (se carga antes que este archivo).
 
 const formulario = document.getElementById('formulario');
 const boton = document.getElementById('boton-enviar');
@@ -43,7 +42,7 @@ formulario.addEventListener('submit', async (evento) => {
   }
 
   if (URL_APPS_SCRIPT.startsWith('PEGA_AQUI')) {
-    mostrarMensaje('Falta configurar la URL de Apps Script en app.js.', 'error');
+    mostrarMensaje('Falta configurar la URL de Apps Script en config.js.', 'error');
     return;
   }
 

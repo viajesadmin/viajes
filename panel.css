@@ -1,0 +1,187 @@
+/* Estilos propios del panel. Los colores, el fondo, los campos y los botones
+   vienen de styles.css (variables en :root), así ambas páginas se ven iguales. */
+
+.contenedor-login { max-width: 440px; margin-top: 12vh; }
+.contenedor-panel { max-width: 1240px; padding: 36px 36px 28px; }
+
+/* ---------- Cabecera ---------- */
+.panel-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+.panel-cabecera h1 { margin: 0 0 4px; }
+.contador { margin: 0; color: var(--texto-suave); font-weight: 500; }
+.panel-acciones { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* Botón secundario: transparente con borde, para no competir con el botón principal */
+.boton-secundario {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  padding: 9px 18px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: none;
+}
+.boton-secundario:hover { background: rgba(255, 255, 255, 0.3); box-shadow: none; }
+
+/* ---------- Filtros ---------- */
+.filtros {
+  display: grid;
+  /* La búsqueda ocupa más espacio; las fechas y el orden, lo necesario */
+  grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(150px, 1fr)) minmax(200px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+.filtro label { margin-bottom: 6px; font-size: 0.9rem; }
+/* Misma altura para todos: si no, cada tipo de campo mide distinto y se desalinean */
+.filtro input,
+.filtro select { height: 46px; padding: 0 16px; }
+.filtro select { padding-right: 44px; }   /* espacio para la flecha (el estilo base está en styles.css) */
+.boton-limpiar { height: 44px; }
+
+/* ---------- Tabla ---------- */
+/* Fondo blanco: la tabla es para leer mucho texto, así que va sobre blanco y con texto oscuro */
+.tabla-contenedor {
+  overflow-x: auto;   /* si no cabe, se desplaza horizontalmente sin romper la página */
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(60, 20, 90, 0.18);
+}
+
+.tabla {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+  color: var(--texto-campo);
+  font-size: 0.9rem;
+}
+
+.tabla th {
+  position: sticky;   /* el encabezado se queda visible al hacer scroll */
+  top: 0;
+  padding: 14px 12px;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: linear-gradient(90deg, var(--morado), #7e63cc);
+}
+
+.tabla td {
+  padding: 12px;
+  vertical-align: top;
+  border-bottom: 1px solid #eee8f5;
+}
+
+.tabla tbody tr { cursor: pointer; transition: background 0.12s; }
+.tabla tbody tr:nth-child(even) { background: #faf7fd; }   /* filas alternas: guían la vista */
+.tabla tbody tr:hover { background: #ecfbfc; }
+.tabla tbody tr:focus-visible { outline: 3px solid var(--cian); outline-offset: -3px; }
+
+/* Textos largos: máximo 3 líneas en la tabla; el texto completo está en el detalle */
+.recorte {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: break-word; /* parte palabras solo si no caben en una línea completa */
+}
+
+.col-fecha { white-space: nowrap; color: #6a6580; }
+.col-nombre { font-weight: 500; min-width: 120px; }
+.col-cumplido { min-width: 120px; }
+
+.sin-resultados,
+.pista { text-align: center; color: var(--texto-suave); }
+.sin-resultados { margin: 18px 0 0; font-weight: 500; }
+.pista { margin: 14px 0 0; font-size: 0.85rem; }
+
+.contenedor-panel .mensaje { margin: 0 0 14px; }
+
+/* ---------- Detalle ---------- */
+.modal-detalle {
+  width: min(92vw, 640px);
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+}
+.modal-detalle .modal-titulo { margin-top: 0; text-align: center; }
+.detalle-lista { margin: 20px 0 0; }
+.detalle-lista dt {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--morado);
+}
+.detalle-lista dd {
+  margin: 4px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee8f5;
+  white-space: pre-wrap;      /* respeta los saltos de línea que escribió la persona */
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Pantallas medianas ---------- */
+@media (max-width: 1000px) {
+  .filtros { grid-template-columns: 1fr 1fr; }
+  .filtro-busqueda { grid-column: 1 / -1; }
+  .boton-limpiar { width: 100%; }
+}
+
+/* ---------- Celular: cada respuesta se vuelve una tarjeta ---------- */
+@media (max-width: 760px) {
+  .contenedor-panel { padding: 26px 16px 20px; }
+  .contenedor-login { margin-top: 24px; }
+
+  .tabla-contenedor { background: transparent; box-shadow: none; overflow: visible; }
+  .tabla { min-width: 0; }
+  /* El encabezado se oculta visualmente (los lectores de pantalla aún lo leen) */
+  .tabla thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .tabla, .tabla tbody, .tabla tr, .tabla td { display: block; }
+
+  .tabla tbody tr,
+  .tabla tbody tr:nth-child(even) {
+    margin-bottom: 14px;
+    padding: 6px 0;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(60, 20, 90, 0.18);
+  }
+  .tabla td { padding: 8px 16px; border-bottom: none; }
+  /* La etiqueta de cada dato sale del atributo data-label que pone panel.js */
+  .tabla td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--morado);
+  }
+  .recorte { -webkit-line-clamp: 2; line-clamp: 2; }
+}
+
+@media (max-width: 520px) {
+  .filtros { grid-template-columns: 1fr; }
+  .panel-acciones { width: 100%; }
+  .panel-acciones .boton-secundario { flex: 1; }
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Pide a Google y otros buscadores que no muestren esta página en resultados -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel de evaluaciones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- styles.css trae el fondo, colores y botones del formulario; panel.css agrega lo propio del panel -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+  <div class="decoracion" aria-hidden="true">
+    <span class="circulo cian c1"></span>
+    <span class="circulo morado c2"></span>
+    <span class="circulo cian c3"></span>
+    <span class="circulo cian c4"></span>
+    <span class="circulo morado c5"></span>
+    <span class="circulo cian c6"></span>
+    <span class="circulo morado c7"></span>
+    <span class="raya r1"></span>
+    <span class="raya r2"></span>
+    <span class="raya r3"></span>
+    <span class="raya r4"></span>
+    <span class="raya r5"></span>
+    <span class="raya r6"></span>
+  </div>
+
+  <!-- ===== Vista 1: inicio de sesión ===== -->
+  <main id="vista-login" class="contenedor contenedor-login">
+    <header>
+      <h1>Panel de evaluaciones</h1>
+      <p class="subtitulo">Acceso restringido. Inicia sesión para ver las respuestas.</p>
+    </header>
+
+    <form id="form-login" novalidate>
+      <div class="campo">
+        <label for="usuario">Usuario</label>
+        <input type="text" id="usuario" name="usuario" required autocomplete="username" autocapitalize="none" spellcheck="false">
+      </div>
+      <div class="campo">
+        <label for="clave">Contraseña</label>
+        <input type="password" id="clave" name="clave" required autocomplete="current-password">
+      </div>
+      <button type="submit" id="boton-login">Ingresar</button>
+      <p id="mensaje-login" class="mensaje" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <!-- ===== Vista 2: panel con la tabla (oculto hasta iniciar sesión) ===== -->
+  <main id="vista-panel" class="contenedor contenedor-panel" hidden>
+    <header class="panel-cabecera">
+      <div>
+        <h1>Evaluaciones de visitas</h1>
+        <p id="contador" class="contador"></p>
+      </div>
+      <div class="panel-acciones">
+        <button type="button" id="boton-recargar" class="boton-secundario">Actualizar</button>
+        <button type="button" id="boton-salir" class="boton-secundario">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <div class="filtros">
+      <div class="filtro filtro-busqueda">
+        <label for="buscar">Buscar</label>
+        <input type="search" id="buscar" placeholder="Nombre, objetivo, observaciones...">
+      </div>
+      <div class="filtro">
+        <label for="desde">Desde</label>
+        <input type="date" id="desde">
+      </div>
+      <div class="filtro">
+        <label for="hasta">Hasta</label>
+        <input type="date" id="hasta">
+      </div>
+      <div class="filtro">
+        <label for="orden">Orden</label>
+        <select id="orden">
+          <option value="desc">Recientes primero</option>
+          <option value="asc">Antiguas primero</option>
+        </select>
+      </div>
+      <button type="button" id="limpiar-filtros" class="boton-secundario boton-limpiar">Limpiar filtros</button>
+    </div>
+
+    <p id="mensaje-panel" class="mensaje" role="status" aria-live="polite"></p>
+
+    <div class="tabla-contenedor">
+      <table class="tabla">
+        <thead><tr id="tabla-encabezado"></tr></thead>
+        <tbody id="tabla-cuerpo"></tbody>
+      </table>
+    </div>
+    <p id="sin-resultados" class="sin-resultados" hidden>No hay respuestas que coincidan con los filtros.</p>
+    <p class="pista">Haz clic en una fila para ver la respuesta completa.</p>
+  </main>
+
+  <!-- Detalle de una respuesta -->
+  <dialog id="detalle" class="modal modal-detalle" aria-labelledby="detalle-titulo">
+    <h2 id="detalle-titulo" class="modal-titulo">Detalle de la evaluación</h2>
+    <dl id="detalle-contenido" class="detalle-lista"></dl>
+    <button type="button" id="detalle-cerrar">Cerrar</button>
+  </dialog>
+
+  <script src="config.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>
