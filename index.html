@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- "?v=2": número de versión. Al cambiar CSS o JS, súbelo (v=3, v=4...) para que
+       los navegadores descarguen el archivo nuevo en vez de usar el guardado en caché. -->
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
   <!-- Figuras decorativas del fondo (aria-hidden: los lectores de pantalla las ignoran) -->
@@ -31,13 +33,36 @@
   <main class="contenedor">
     <header>
       <h1>Evaluación de visita a agencia</h1>
-      <p class="subtitulo">Tu respuesta nos ayuda a recopilar información para mejorar cada día, estar pendientes de todas las agencias y trabajar en equipo. Toma menos de 2 minutos.</p>
+      <!-- app.js agrega el saludo "Hola [Nombre], ..." con el nombre del administrador del enlace -->
+      <p class="subtitulo" id="subtitulo">Tu respuesta a este formulario nos ayuda a recopilar información para mejorar cada día, es de carácter obligatorio y toma menos de 2 minutos.</p>
     </header>
 
-    <form id="formulario" novalidate>
+    <!-- Se muestra si alguien abre el formulario sin un enlace de invitación válido -->
+    <div id="sin-invitacion" class="aviso" role="alert" hidden>
+      <p class="aviso-titulo">Enlace no válido</p>
+      <p>Este formulario solo se puede responder desde el enlace personal que te envió tu jefe.
+         Si crees que es un error, pídele que te lo envíe de nuevo.</p>
+    </div>
+
+    <!-- "hidden": el formulario aparece solo cuando app.js confirma que hay una invitación -->
+    <form id="formulario" novalidate hidden>
+      <!-- El administrador NO es un campo editable: viene dentro de la invitación firmada.
+           Aunque alguien cambiara este texto con F12, el servidor usa el nombre firmado. -->
+      <div class="campo">
+        <p class="etiqueta" id="etiqueta-administrador">Nombre del administrador</p>
+        <div class="campo-fijo" aria-labelledby="etiqueta-administrador">
+          <svg class="candado" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span id="administrador-fijo"></span>
+        </div>
+        <p class="ayuda ayuda-abajo">Este nombre viene en tu enlace y no se puede cambiar.</p>
+      </div>
+
       <div class="campo">
         <label for="nombre">Nombre de la persona que visita <span class="obligatorio">*</span></label>
-        <input type="text" id="nombre" name="nombre" maxlength="150" required autocomplete="name">
+        <input type="text" id="nombre" name="nombre" maxlength="150" required autocomplete="off">
       </div>
 
       <div class="campo">
@@ -108,7 +133,7 @@
     </div>
   </dialog>
 
-  <script src="config.js"></script>
-  <script src="app.js"></script>
+  <script src="config.js?v=2"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
