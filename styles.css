@@ -103,12 +103,43 @@ h1 {
 
 .campo { margin-bottom: 22px; }
 
-label {
+/* .etiqueta: mismo aspecto que <label>, para textos que no rotulan un campo editable */
+label,
+.etiqueta {
   display: block;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
   padding-left: 6px;
 }
+
+/* Nombre que viene en la invitación: se ve como un campo, pero bloqueado */
+.campo-fijo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  color: var(--texto-campo);
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.82);
+  border: 2px dashed rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  cursor: not-allowed;
+}
+.candado { flex-shrink: 0; color: var(--morado); }
+.ayuda-abajo { margin: 6px 0 0; }
+.campo-compacto { margin-bottom: 16px; }
+.nota-nombres { margin: -10px 0 30px; }
+
+/* Aviso cuando se abre el formulario sin un enlace válido */
+.aviso {
+  padding: 22px 24px;
+  text-align: center;
+  background: rgba(60, 20, 90, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+}
+.aviso p { margin: 0; color: var(--texto-suave); }
+.aviso .aviso-titulo { margin-bottom: 8px; font-size: 1.15rem; font-weight: 700; color: var(--texto); }
 .obligatorio { color: var(--cian); }
 .opcional { font-weight: 400; color: var(--texto-suave); }
 .ayuda { margin: -4px 0 8px; padding-left: 6px; font-size: 0.88rem; color: var(--texto-suave); }

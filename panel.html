@@ -10,10 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <!-- styles.css trae el fondo, colores y botones del formulario; panel.css agrega lo propio del panel -->
-  <!-- "?v=2": número de versión. Al cambiar CSS o JS, súbelo (v=3, v=4...) para que
+  <!-- "?v=3": número de versión. Al cambiar CSS o JS, súbelo (v=3, v=4...) para que
        los navegadores descarguen el archivo nuevo en vez de usar el guardado en caché. -->
-  <link rel="stylesheet" href="styles.css?v=2">
-  <link rel="stylesheet" href="panel.css?v=2">
+  <link rel="stylesheet" href="styles.css?v=3">
+  <link rel="stylesheet" href="panel.css?v=3">
 </head>
 <body>
   <div class="decoracion" aria-hidden="true">
@@ -114,9 +114,16 @@
     <h2 id="enviar-titulo" class="modal-titulo">Enviar formulario</h2>
 
     <form id="form-enviar" novalidate>
-      <label for="nombre-destino">Nombre del administrador a quien quieres enviarle este formulario</label>
-      <input type="text" id="nombre-destino" minlength="3" maxlength="100" required autocomplete="off"
-             placeholder="Ej: Carlos Andrés Ruiz">
+      <div class="campo-modal">
+        <label for="nombre-destino">Nombre del administrador o persona para enviar el formulario</label>
+        <input type="text" id="nombre-destino" minlength="3" maxlength="100" required autocomplete="off"
+               placeholder="Ej: Carlos Andrés Ruiz">
+      </div>
+      <div class="campo-modal">
+        <label for="nombre-visitante">Nombre de la persona que visita</label>
+        <input type="text" id="nombre-visitante" minlength="3" maxlength="100" required autocomplete="off"
+               placeholder="Ej: María López">
+      </div>
       <button type="submit" id="boton-generar">Generar enlace</button>
     </form>
 
@@ -124,19 +131,20 @@
 
     <div id="resultado-enlace" class="resultado-enlace" hidden>
       <p class="resultado-titulo">Enlace para <strong id="enlace-para"></strong></p>
+      <p class="resultado-subtitulo">Persona que visita: <strong id="enlace-visitante"></strong></p>
       <input type="text" id="enlace-generado" readonly aria-label="Enlace generado">
       <div class="acciones-enlace">
         <button type="button" id="boton-copiar">Copiar enlace</button>
         <a id="boton-whatsapp" class="boton-whatsapp" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a>
       </div>
-      <p class="nota-enlace">Este enlace es personal del administrador y se puede usar todas las veces que necesite.</p>
+      <p class="nota-enlace">Este enlace es personal y se puede usar todas las veces que se necesite.</p>
       <button type="button" id="boton-otro" class="boton-texto">Generar otro enlace</button>
     </div>
 
     <button type="button" id="enviar-cerrar" class="boton-texto">Cerrar</button>
   </dialog>
 
-  <script src="config.js?v=2"></script>
-  <script src="panel.js?v=2"></script>
+  <script src="config.js?v=3"></script>
+  <script src="panel.js?v=3"></script>
 </body>
 </html>

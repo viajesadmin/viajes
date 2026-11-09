@@ -161,7 +161,9 @@
 .modal-enviar .mensaje { margin-top: 14px; }
 
 .resultado-enlace { margin-top: 18px; }
-.resultado-titulo { margin: 0 0 8px; padding-left: 4px; }
+.campo-modal { margin-bottom: 16px; }
+.resultado-titulo { margin: 0 0 2px; padding-left: 4px; }
+.resultado-subtitulo { margin: 0 0 10px; padding-left: 4px; font-size: 0.9rem; color: #6a6580; }
 #enlace-generado { font-size: 0.85rem; color: #4a4560; background: #f7f4fb; }
 
 .acciones-enlace {

@@ -5,6 +5,10 @@ const boton = document.getElementById('boton-enviar');
 const mensaje = document.getElementById('mensaje');
 const avisoSinInvitacion = document.getElementById('sin-invitacion');
 const administradorFijo = document.getElementById('administrador-fijo');
+const visitanteFijo = document.getElementById('visitante-fijo');
+const campoVisitanteFijo = document.getElementById('campo-visitante-fijo');
+const campoVisitanteLibre = document.getElementById('campo-visitante-libre');
+const inputVisitante = document.getElementById('nombre');
 
 const modal = document.getElementById('modal');
 const modalProcesando = document.getElementById('modal-procesando');
@@ -13,8 +17,8 @@ const modalCerrar = document.getElementById('modal-cerrar');
 
 // ---------- Invitación ----------
 /**
- * Lee la invitación del enlace (…/?inv=CARGA.FIRMA) y extrae el nombre del
- * administrador para MOSTRARLO.
+ * Lee la invitación del enlace (…/?inv=CARGA.FIRMA) y extrae los nombres
+ * (n = administrador, v = persona que visita) para MOSTRARLOS.
  *
  * Ojo: aquí solo se decodifica la CARGA, no se verifica la FIRMA (para eso se
  * necesita el secreto, que solo tiene Apps Script). Si alguien altera el enlace,
@@ -34,7 +38,9 @@ function leerInvitacion() {
     const carga = JSON.parse(new TextDecoder().decode(bytes));
 
     if (carga.t !== 'inv' || typeof carga.n !== 'string' || !carga.n.trim()) return null;
-    return { token, administrador: carga.n };
+    // "v" no existe en los enlaces generados antes de este cambio: queda en null.
+    const visitante = typeof carga.v === 'string' && carga.v.trim() ? carga.v : null;
+    return { token, administrador: carga.n, visitante };
   } catch {
     return null; // enlace incompleto o modificado
   }
@@ -45,6 +51,15 @@ const invitacion = leerInvitacion();
 if (invitacion) {
   // textContent: el nombre se muestra como texto, nunca como HTML
   administradorFijo.textContent = invitacion.administrador;
+
+  if (invitacion.visitante) {
+    visitanteFijo.textContent = invitacion.visitante;
+    campoVisitanteFijo.hidden = false;
+    campoVisitanteLibre.hidden = true;
+    // disabled: el navegador no lo valida ni lo incluye al enviar (el servidor usa el firmado)
+    inputVisitante.disabled = true;
+  }
+
   document.getElementById('subtitulo').textContent =
     `Hola ${invitacion.administrador}, tu respuesta a este formulario nos ayuda a recopilar ` +
     'información para mejorar cada día, es de carácter obligatorio y toma menos de 2 minutos.';
@@ -92,8 +107,8 @@ formulario.addEventListener('submit', async (evento) => {
     return;
   }
 
-  // Convierte el formulario en un objeto { nombre: '...', objetivo: '...', ... } y agrega la invitación.
-  // No se envía el administrador: el servidor lo toma de la invitación firmada.
+  // Convierte el formulario en un objeto { objetivo: '...', ... } y agrega la invitación.
+  // Los nombres bloqueados no se envían: el servidor los toma de la invitación firmada.
   const datos = Object.fromEntries(new FormData(formulario));
   datos.invitacion = invitacion.token;
 
@@ -115,8 +130,8 @@ formulario.addEventListener('submit', async (evento) => {
       throw new Error(resultado.error || 'No se pudo guardar la respuesta.');
     }
 
-    // reset() limpia las respuestas; el administrador se conserva porque no es un
-    // campo del formulario. Así el mismo enlace sirve para la siguiente visita.
+    // reset() limpia las respuestas; los nombres bloqueados se conservan porque no
+    // son campos del formulario.
     formulario.reset();
     formulario.classList.remove('intentado');
     mostrarModal('exito');

@@ -140,6 +140,8 @@ document.getElementById('boton-salir').addEventListener('click', () => cerrarSes
 const dialogoEnviar = document.getElementById('enviar');
 const formEnviar = document.getElementById('form-enviar');
 const inputNombreDestino = document.getElementById('nombre-destino');
+const inputNombreVisitante = document.getElementById('nombre-visitante');
+const enlaceVisitante = document.getElementById('enlace-visitante');
 const botonGenerar = document.getElementById('boton-generar');
 const mensajeEnviar = document.getElementById('mensaje-enviar');
 const resultadoEnlace = document.getElementById('resultado-enlace');
@@ -171,6 +173,7 @@ formEnviar.addEventListener('submit', async (evento) => {
   }
 
   const nombre = inputNombreDestino.value.trim();
+  const visitante = inputNombreVisitante.value.trim();
   botonGenerar.disabled = true;
   botonGenerar.textContent = 'Generando...';
   mostrarMensaje(mensajeEnviar, '');
@@ -178,7 +181,7 @@ formEnviar.addEventListener('submit', async (evento) => {
   try {
     // El enlace lo FIRMA el servidor (y solo si la sesión de la jefe es válida).
     // Si el panel armara el enlace por su cuenta, cualquiera podría hacer lo mismo.
-    const resultado = await llamarApi({ accion: 'invitacion', token, nombre });
+    const resultado = await llamarApi({ accion: 'invitacion', token, nombre, visitante });
     if (!resultado.ok) {
       if (resultado.codigo === 'TOKEN_INVALIDO') {
         dialogoEnviar.close();
@@ -194,6 +197,7 @@ formEnviar.addEventListener('submit', async (evento) => {
     enlace.searchParams.set('inv', resultado.invitacion);
 
     enlacePara.textContent = resultado.nombre;
+    enlaceVisitante.textContent = resultado.visitante;
     inputEnlace.value = enlace.href;
 
     // "\n\n" = salto de línea doble: deja una línea en blanco antes del enlace.
